@@ -1,4 +1,285 @@
-.card img {
-  height: 120px;
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@400;500;600&display=swap');
+
+/* ===== Variáveis ===== */
+:root {
+  --bg: #0a0a12;
+  --surface: #13131f;
+  --surface2: #1c1c2e;
+  --border: rgba(255,255,255,0.07);
+  --text: #e8e8f0;
+  --text-muted: #6b6b88;
+  --red: #e63946;
+  --red-glow: rgba(230, 57, 70, 0.3);
+
+  /* Sobrescreve variáveis do Bootstrap */
+  --bs-body-bg: var(--bg);
+  --bs-body-color: var(--text);
+  --bs-border-color: var(--border);
+  --bs-primary: var(--red);
+  --bs-primary-rgb: 230, 57, 70;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.d-none { display: none !important; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(230,57,70,0.12), transparent);
+}
+
+/* ===== Header ===== */
+.pokedex-header {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+  position: relative;
+}
+
+.pokedex-header::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 30%, #4FC3F7 50%, var(--red) 70%);
+  margin: 0 auto 1.2rem;
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.06), 0 0 40px var(--red-glow);
+  animation: pokeball-spin 6s linear infinite;
+}
+
+@keyframes pokeball-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.pokedex-header h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  color: var(--red);
+  text-shadow: 0 0 30px var(--red-glow), 0 2px 0 #7a0000;
+  letter-spacing: 2px;
+}
+
+.pokedex-header p {
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* ===== Busca — usa .input-group do Bootstrap ===== */
+.busca-wrap {
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1rem;
+}
+
+/* Sobrescreve .form-control do Bootstrap */
+.busca-input.form-control {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px !important;
+  color: var(--text);
+  padding: 0.65rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.busca-input.form-control::placeholder { color: var(--text-muted); }
+.busca-input.form-control:focus {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-glow);
+}
+
+/* Sobrescreve .btn do Bootstrap */
+.btn-busca.btn,
+.btn-limpar.btn {
+  border-radius: 8px !important;
+  padding: 0.65rem 1.1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-busca.btn {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.btn-busca.btn:hover { opacity: 0.85; background: var(--red); border-color: var(--red); }
+
+.btn-limpar.btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.btn-limpar.btn:hover { color: var(--text); background: var(--surface2); }
+
+.btn-busca.btn:active,
+.btn-limpar.btn:active { transform: scale(0.97); }
+
+/* ===== Loading ===== */
+#loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  display: none;
+}
+
+/* Usa .spinner-border do Bootstrap com cor customizada */
+#loading .spinner-border {
+  width: 36px;
+  height: 36px;
+  border-width: 3px;
+  border-color: var(--surface2);
+  border-top-color: var(--red);
+  margin-bottom: 0.8rem;
+}
+
+/* ===== Erro — usa .alert do Bootstrap ===== */
+#erro.alert {
+  max-width: 480px;
+  margin: 0 auto 1.5rem;
+  background: rgba(230,57,70,0.1);
+  border: 1px solid rgba(230,57,70,0.3);
+  border-radius: 10px;
+  color: #ff8a94;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ===== Grid de Cards — usa .row/.col do Bootstrap ===== */
+/* Exemplo de uso no HTML:
+   <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 px-3">
+     <div class="col"><div class="poke-card">...</div></div>
+   </div>
+*/
+
+/* ===== Cards ===== */
+.poke-card {
+  background: linear-gradient(145deg, var(--tipo-bg, #1e1e1e), var(--surface));
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 1.2rem 1rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+  overflow: hidden;
+  height: 100%; /* preenche altura da coluna Bootstrap */
+}
+
+.poke-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 20%, var(--tipo-cor, #fff) 0%, transparent 60%);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.poke-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--tipo-cor, #fff);
+  box-shadow: 0 8px 30px -8px var(--tipo-cor, #fff);
+}
+
+.poke-numero {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.poke-img-wrap {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poke-img-wrap img {
+  height: 100%;
+  width: auto;
   object-fit: contain;
+  filter: drop-shadow(0 4px 12px var(--tipo-cor, transparent));
+  transition: transform 0.2s;
+}
+
+.poke-card:hover .poke-img-wrap img {
+  transform: scale(1.08) translateY(-4px);
+}
+
+.poke-nome {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0.6rem 0 0.5rem;
+  color: #fff;
+}
+
+.poke-tipos {
+  display: flex;
+  gap: 0.35rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.7rem;
+}
+
+.tipo-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid;
+  letter-spacing: 0.5px;
+}
+
+.poke-stats {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ===== Botão Carregar Mais — usa .btn do Bootstrap ===== */
+.btn-mais-wrap {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+#btn-mais.btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 10px;
+  padding: 0.75rem 2.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+#btn-mais.btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--red-glow);
+}
+
+/* ===== Animação de entrada dos cards ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.poke-card {
+  animation: fadeUp 0.35s ease both;
 }
