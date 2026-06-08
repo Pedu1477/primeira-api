@@ -2,7 +2,7 @@ export function capitalizar(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-const TIPO_CORES = {
+export const TIPO_CORES = {
   fire: "#FF6B35", water: "#4FC3F7", grass: "#81C784",
   electric: "#FFD54F", psychic: "#F48FB1", ice: "#80DEEA",
   dragon: "#7E57C2", dark: "#546E7A", fairy: "#F06292",
@@ -11,7 +11,7 @@ const TIPO_CORES = {
   ghost: "#7E57C2", steel: "#B0BEC5", normal: "#9E9E9E",
 };
 
-const TIPO_BG = {
+export const TIPO_BG = {
   fire: "#2d1a0e", water: "#0d1f2d", grass: "#0d2010",
   electric: "#2d2600", psychic: "#2d1020", ice: "#0d2428",
   dragon: "#1a1030", dark: "#12181c", fairy: "#2d1020",
@@ -34,7 +34,7 @@ export function renderizarCard(dados) {
 
   return `
     <div class="col-6 col-md-4 col-lg-3 mb-4">
-      <div class="poke-card" style="--tipo-cor: ${cor}; --tipo-bg: ${bg}" data-tipo="${tipo}">
+      <div class="poke-card" style="--tipo-cor: ${cor}; --tipo-bg: ${bg}" data-tipo="${tipo}" data-pokemon-id="${dados.id}">
         <div class="poke-numero">#${String(dados.id).padStart(3, "0")}</div>
         <div class="poke-img-wrap">
           <img src="${imagem}" alt="${dados.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/120?text=?'">

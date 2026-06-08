@@ -18,9 +18,9 @@
  
     <!-- Busca -->
     <div class="busca-wrap">
-      <input id="busca" class="busca-input" type="text" placeholder="Buscar por nome...">
+      <input id="busca" class="busca-input" type="text" placeholder="Buscar por nome ou ID...">
       <button id="btn-buscar" class="btn-busca">Buscar</button>
-      <button id="btn-limpar" class="btn-limpar">✕ Limpar</button>
+      <button id="btn-limpar" class="btn-limpar" style="display:none">✕ Limpar</button>
     </div>
  
     <!-- Erro -->
@@ -37,12 +37,20 @@
  
     <!-- Carregar mais -->
     <div class="btn-mais-wrap">
-      <button id="btn-mais" style="display:none">Carregar mais</button>
+      <button id="btn-mais" style="display:none">Próximo Pokémon</button>
     </div>
  
   </div>
+
+  <!-- Modal de Detalhes -->
+  <div id="modal-detalhes" class="modal-overlay d-none">
+    <div class="modal-conteudo">
+      <button id="btn-fechar-modal" class="btn-fechar-modal">✕</button>
+      <div id="detalhes-conteudo"></div>
+    </div>
+  </div>
  
   <!-- Script -->
-  <script src="js/script.js"></script>
+  <script  src="js/script.js"></script>
 </body>
 </html>
